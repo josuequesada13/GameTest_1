@@ -2,7 +2,6 @@ package com.game;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -25,11 +24,11 @@ public class Ship extends Sprite{
         movement = true;
         win = false;
 
-        int X = 175 - 25;
-        int Y = 300 - 19;
+        //int X = 175 - 25;
+        //int Y = 300 - 19;
 
-        setX(X);
-        setY(Y);
+        setX(768 - 25);
+        setY(750 - 19);
 
     }
 
@@ -39,8 +38,8 @@ public class Ship extends Sprite{
             y += dy;
             if(y<10){
                 y=10;
-            }else if(y>= 265){
-                y=265;
+            }else if(y>= 750){
+                y=750;
             }
         }else{
             this.y = 265;
@@ -48,7 +47,7 @@ public class Ship extends Sprite{
     }
 
     public void respawn(){
-        this.setY(265);
+        this.setY(750);
     }
 
     public void gotPoint(){

@@ -58,7 +58,7 @@ public class Asteroid extends Sprite{
     }
 
     public boolean disappeared(){
-        if(this.isMovingToRight() && this.x > 342){
+        if(this.isMovingToRight() && this.x > 1536){
             return true;
         }else if(!this.isMovingToRight() && this.x < 0){
             return true;
@@ -67,7 +67,7 @@ public class Asteroid extends Sprite{
     }
 
     public void respawn(){
-        this.y = ThreadLocalRandom.current().nextInt(2,245);
+        this.y = ThreadLocalRandom.current().nextInt(2,1530);
         int direction = ThreadLocalRandom.current().nextInt(0,2);
         if (direction == 1){
             setX(332);

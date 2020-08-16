@@ -41,7 +41,7 @@ public class GameFrame extends JFrame {
                 inGame = false;
             }*/
         }
-        
+
     public void start() throws IOException {
         pack();
         inGame = false;
@@ -55,8 +55,8 @@ public class GameFrame extends JFrame {
     public void createGamePanel() throws IOException {
         InternalFrame = new JInternalFrame();
         InternalFrame.setVisible(true);
-        InternalFrame.setSize(350,350);
-        InternalFrame.setLocation(0,0);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        InternalFrame.setSize(screenSize.width, screenSize.height);
         iFrameProps(InternalFrame, InternalFrame.getX(), InternalFrame.getY());
         mainPane.add(InternalFrame);
         gamePanel = new GamePanel(1);

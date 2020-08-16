@@ -17,11 +17,6 @@ public class GamePanel extends JPanel {
     private Image background;
     public boolean win;
 
-    public int x;
-    public int y;
-
-
-
     public GamePanel(int player) throws IOException {
         super();
         this.player = player;
@@ -31,7 +26,8 @@ public class GamePanel extends JPanel {
 
     public void start() throws IOException {
         this.asteroidList = new ArrayList<>();
-        setPreferredSize(new Dimension(350, 350));
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        setPreferredSize(new Dimension(screenSize.width, screenSize.height));
         this.setVisible(true);
         this.ship1 = new Ship();
         setFocusable(true);
@@ -41,41 +37,41 @@ public class GamePanel extends JPanel {
     }
 
     private void startAsteroid() throws IOException {
-        for(int i=0; i<10; i++){
-            int direction = ThreadLocalRandom.current().nextInt(0,2);
-            Asteroid asteroid = new Asteroid(ThreadLocalRandom.current().nextInt(8,332),
-                    ThreadLocalRandom.current().nextInt(8,245));
-            if (direction == 1){
+        for (int i = 0; i < 40; i++) {
+            int direction = ThreadLocalRandom.current().nextInt(0, 2);
+            Asteroid asteroid = new Asteroid(ThreadLocalRandom.current().nextInt(0, 1500),
+                    ThreadLocalRandom.current().nextInt(8, 800));
+            if (direction == 1) {
                 asteroid.setMovingToRight(false);
-            }else{
+            } else {
                 asteroid.setMovingToRight(true);
             }
             this.asteroidList.add(asteroid);
         }
     }
 
-    public void doLoop(){
+    public void doLoop() {
         updateMovement();
         ship1.gotPoint();
         checkWin();
         repaint();
     }
 
-    public void updateMovement(){
+    public void updateMovement() {
         this.ship1.move();
-        for(Asteroid asteroid:this.asteroidList){
+        for (Asteroid asteroid : this.asteroidList) {
             asteroid.move();
-            if(asteroid.crashShip(ship1)){
+            if (asteroid.crashShip(ship1)) {
                 ship1.respawn();
             }
         }
     }
 
     public void setBackground() throws IOException {
-        this.background = ImageIO.read(new File("images/spaceRaceBG.png"));
+        this.background = ImageIO.read(new File("images/platBG.png"));
     }
 
-    public void paintComponent(Graphics g){
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
         drawBackground(g);
         doDrawing(g);
@@ -86,44 +82,40 @@ public class GamePanel extends JPanel {
         drawAsteroids(g);
     }
 
-    private void drawShip(Graphics g){
+    private void drawShip(Graphics g) {
         g.drawImage(ship1.getImage(), ship1.getX(), ship1.getY(), this);
     }
 
     private void drawAsteroids(Graphics g) {
-        for(Asteroid asteroid:this.asteroidList){
-            if(asteroid.isVisible()){
-                g.drawImage(asteroid.getImage(), asteroid.getX(), asteroid.getY(),this);
+        for (Asteroid asteroid : this.asteroidList) {
+            if (asteroid.isVisible()) {
+                g.drawImage(asteroid.getImage(), asteroid.getX(), asteroid.getY(), this);
             }
         }
     }
 
-    public void drawBackground(Graphics g){
-        g.drawImage(this.background, 0, 0,null);
+    public void drawBackground(Graphics g) {
+        g.drawImage(this.background, 0, 0, null);
     }
 
-    public void moveUp(){
-        this.ship1.dy = -2;
+    public void moveUp() {
+        this.ship1.dy = -3;
     }
 
-    public void moveDown(){
-        this.ship1.dy = 2;
+    public void moveDown() {
+        this.ship1.dy = 3;
     }
 
-    public void shipStop(){
+    public void shipStop() {
         this.ship1.dy = 0;
     }
 
-    public void checkWin(){
+    public void checkWin() {
         ship1.checkWin();
-        if(ship1.getWin()){
+        if (ship1.getWin()) {
             ship1.setMovement(false);
             win = true;
         }
-    }
-
-    public int getPlayer(){
-        return player;
     }
 }
 
